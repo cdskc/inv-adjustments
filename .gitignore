@@ -12,3 +12,7 @@ wheels/
 
 .DS_Store
 data
+
+# Secrets
+.env
+service_account.json

@@ -1,9 +1,14 @@
 [project]
 name = "inv-adjustments"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Inventory adjustments processing and reporting"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "pandas>=3.0.1",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "python-dotenv>=1.1.0",
+    "google-api-python-client>=2.160.0",
+    "google-auth>=2.38.0",
 ]
