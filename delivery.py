@@ -1,4 +1,3 @@
-import base64
 import os
 from datetime import date
 
@@ -8,13 +7,12 @@ DRIVE_SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
 
 def send_email_report(html_content: str) -> None:
-    """Send the HTML report as an email attachment via Resend API."""
+    """Send the HTML report as the email body via Resend API."""
     api_key = os.environ["RESEND_API_KEY"]
     email_from = os.environ["EMAIL_FROM"]
     recipients = [r.strip() for r in os.environ["EMAIL_TO"].split(",")]
 
     report_date = date.today().strftime("%B %d, %Y")
-    filename = f"flagged_adjustments_{date.today().strftime('%Y_%m_%d')}.html"
 
     response = requests.post(
         "https://api.resend.com/emails",
@@ -23,19 +21,7 @@ def send_email_report(html_content: str) -> None:
             "from": email_from,
             "to": recipients,
             "subject": f"CS Inventory Adjustments Report – {report_date}",
-            "text": (
-                "The attached report contains controlled substance inventory "
-                "adjustments flagged for review. Offsetting (zero-sum) groups "
-                "have been removed."
-            ),
-            "attachments": [
-                {
-                    "filename": filename,
-                    "content": base64.b64encode(
-                        html_content.encode("utf-8")
-                    ).decode("ascii"),
-                }
-            ],
+            "html": html_content,
         },
         timeout=15,
     )
