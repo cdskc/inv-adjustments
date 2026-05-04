@@ -56,7 +56,7 @@ def _parse_csv_df(df: pd.DataFrame) -> pd.DataFrame:
     """Apply common transforms after reading a CSV into a DataFrame."""
     df = _normalize_columns(df)
     df[COL_QUANTITY] = (
-        df[COL_QUANTITY].str.replace(",", "", regex=False).astype(int)
+        df[COL_QUANTITY].str.replace(",", "", regex=False).astype(float).round().astype(int)
     )
     return df
 
